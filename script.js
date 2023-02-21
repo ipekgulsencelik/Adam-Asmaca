@@ -3,8 +3,9 @@ const word_element = document.getElementById("word");
 const popup = document.getElementById('popup-container');
 const message_element = document.getElementById('success-message');
 
-const correctLetters = ["j", "a", "v", "s", "t"];
+const correctLetters = [];
 const wrongLetters = [];
+const selectedWord = getRandomWord();
 
 function getRandomWord() {
   const words = ["javascript", "java", "python"];
@@ -13,8 +14,6 @@ function getRandomWord() {
 }
 
 function displayWord() {
-  const selectedWord = getRandomWord();
-
   word_element.innerHTML = `
         ${selectedWord.split("").map((letter) => `
             <div class="letter">
@@ -30,4 +29,24 @@ function displayWord() {
   }
 }
 
-displayWord();
+window.addEventListener('keydown', function(e) {
+    if (e.keyCode >= 65 && e.keyCode <= 90) {        
+        const letter = e.key;
+
+        if (selectedWord.includes(letter)) {
+            if (!correctLetters.includes(letter)) {
+                correctLetters.push(letter);
+                displayWord();
+            } else {
+               console.log('bu harfi zaten eklediniz.');
+            }
+        } else {
+            if(!wrongLetters.includes(letter)) {
+                wrongLetters.push(letter);
+                console.log('hatalı harfleri güncelle.');
+            }
+        }
+    }
+});
+
+displayWord()
