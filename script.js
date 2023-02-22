@@ -7,12 +7,14 @@ const wrongLetters_element = document.getElementById('wrong-letters');
 const items = document.querySelectorAll('.item');
 const message = document.getElementById('message');
 
+const PlayAgainBtn = document.getElementById('play-again');
+
 const correctLetters = [];
 const wrongLetters = [];
-const selectedWord = getRandomWord();
+let selectedWord = getRandomWord();
 
 function getRandomWord() {
-  const words = ["javascript", "java", "python"];
+    const words = ["javascript","java","python","css","html","react"];
 
   return words[Math.floor(Math.random() * words.length)];
 }
@@ -62,6 +64,17 @@ function displayMessage() {
         message.classList.remove('show');
     }, 2000);
 }
+
+PlayAgainBtn.addEventListener('click', function() {
+    correctLetters.splice(0);
+    wrongLetters.splice(0);
+    
+    selectedWord = getRandomWord();
+    displayWord();
+    updateWrongLetters();
+
+    popup.style.display = 'none';
+});
 
 window.addEventListener('keydown', function(e) {
     if (e.keyCode >= 65 && e.keyCode <= 90) {        
